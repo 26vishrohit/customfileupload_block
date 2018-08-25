@@ -1,0 +1,84 @@
+<?php
+
+
+/**
+ * Implements hook_permission().
+ */
+
+
+
+function customfileupload_block_permission() {
+  return array(
+    'administer customfileupload_block' => array(
+      'title' => t('Upload Photos,videos,anything by users'),
+      'description' => t('Upload Photos,videos anything by users'),
+    ),
+  );
+}
+
+
+
+/**
+ * Implements hook_menu().
+ */
+function customfileupload_block_menu() {
+}
+
+
+/**
+* Implements hook_block_info().
+*/
+function customfileupload_block_block_info() {
+  $blocks = array();
+  $blocks['uploading_something'] = array(
+    'info' => t('Upload something such as photos,videos etc'),
+  );
+
+  return $blocks;
+}
+
+function customfileupload_block_block_view($delta = '') {
+  // The $delta parameter tells us which block is being requested.
+  $block = array();
+  switch ($delta) {
+    case 'uploading_something':
+      // Create your block content here
+      $block['subject'] = t('Upload something here');
+      $block['content'] = drupal_get_form('upload_something_form');
+      break;
+
+  }
+
+  return $block;
+}
+
+
+
+function upload_something_form($form, &$form_submit){
+
+
+/* convert this  file upload button into multiple file upload*/
+
+
+$form['upload'] = array(
+'#type' => 'file',
+'#title' => t('Choose a file'),
+'#title_display' => 'invisible',
+'#attributes' => array('id' => array('demo')),
+'#size' => 22,
+);
+
+
+$form['submit'] = array(
+'#type' => 'submit',
+'#value' => t("Upload"),
+'#submit' => array('uploadonserverside');
+'#name' => 'uploadonserverside',
+);
+
+  return $form;
+}
+
+function uploadonserverside(){
+
+/*server side to handle upload images no need to write code */

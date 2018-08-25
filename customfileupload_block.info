@@ -1,0 +1,5 @@
+name = Upload file custom block
+description = Upload file custom block 
+package = Custom Modules
+core = 7.x
+
